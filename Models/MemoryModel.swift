@@ -10,7 +10,6 @@ import Foundation
 struct MemoryModel: Identifiable {
     var id: UUID
     var imageName: String
-    var voiceRecording: Recording?
-    var createdRecording: Recording?
+    var voiceRecording: URL?
 }
     

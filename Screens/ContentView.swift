@@ -9,10 +9,23 @@ import SwiftUI
 import RealityKit
 
 struct ContentView : View {
+    
+//    var logoSize: CGSize = 12.0
+    
     var body: some View {
         VStack {
             ARViewContainer()
                 .ignoresSafeArea()
+                .overlay(
+                Image("logo2")
+                    .resizable()
+                    .scaledToFit()
+                    .opacity(0.35)
+                    .frame(maxWidth: 75)
+                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20)))
+                    .padding()
+                , alignment: .topLeading
+                )
                 .overlay(
                     ScrollView(.horizontal) {
                         HStack {
