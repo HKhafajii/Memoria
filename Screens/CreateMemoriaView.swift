@@ -53,7 +53,8 @@ struct RecordView: View {
     
     @State private var showingAlert = false
     
-    @ObservedObject var vm = RecordingListViewModel()
+    @ObservedObject var vm = MemoryViewModel.shared
+    
     @State var recordingFailed = false
     
     var body: some View {
@@ -69,7 +70,7 @@ struct RecordView: View {
                     .onTapGesture {
                         if isRecording == false {
                             do {
-                                try vm.audioManager.startRecording()
+                                try vm.recordingViewModel.audioManager.startRecording()
                             } catch {
                                 print("The start recording function didnt work")
                                 recordingFailed = true
@@ -78,10 +79,13 @@ struct RecordView: View {
                                 isRecording.toggle()
                             }
                         } else {
-                            vm.audioManager.stopRecording()
+                            vm.recordingViewModel.audioManager.stopRecording()
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 isRecording.toggle()
                             }
+                            // MARK: try to find where you've saved the recording url and put it here
+//                            let memory = MemoryModel(id: UUID(), imageName: vm.imageName, voiceRecording: vm.recordingViewModel.audioManager.)
+                            
                         }
                     }//End onTap
                 
@@ -90,7 +94,6 @@ struct RecordView: View {
                     }
             }
             .font(.title3)
-
             .frame(width: 350, height: 75)
             .background(Color("lighto"))
             .cornerRadius(12)
