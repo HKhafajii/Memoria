@@ -18,11 +18,11 @@ struct HomeView: View {
                         .frame(width: 300, height: 300)
                         .cornerRadius(120)
                         .shadow(radius: 10, x: 0, y: 8)
-                    
+                    Spacer()
                     NavigationLink {
                         ContentView()
                     } label: {
-                        HStack(spacing: 20) {
+                        HStack(spacing: 10) {
                             Image(systemName: "eye")
                                 .padding()
                             Text("View \nMemoria")
@@ -39,7 +39,7 @@ struct HomeView: View {
                     
                     NavigationLink(destination: CreateMemoriaView())
                     {
-                        HStack(spacing: 20) {
+                        HStack(spacing: 10) {
                             Image(systemName: "plus.circle.fill")
                                 .padding()
                             Text("Create \nMemoria")
