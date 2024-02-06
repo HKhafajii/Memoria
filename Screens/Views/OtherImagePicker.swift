@@ -13,13 +13,13 @@ import PhotosUI
 
 struct OtherImagePicker: View {
     
-    @StateObject var imagePicker = ImageUtility()
+    @StateObject var imagePicker = MemoryViewModel.shared
     
     var body: some View {
         NavigationStack {
             VStack {
                 
-                if let image = imagePicker.image {
+                if let image = imagePicker.imageViewModel.image {
                     image
                         .resizable()
                         .scaledToFit()
@@ -32,7 +32,7 @@ struct OtherImagePicker: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     PhotosPicker(
-                        selection: $imagePicker.imageSelection
+                        selection: $imagePicker.imageViewModel.imageSelection
                         , matching: .images
                     ) {
                         Image(systemName: "photo")
