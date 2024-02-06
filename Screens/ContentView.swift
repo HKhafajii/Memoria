@@ -10,6 +10,7 @@ import RealityKit
 
 struct ContentView : View {
     
+    @ObservedObject var viewModel = MemoryViewModel.shared
 //    var logoSize: CGSize = 12.0
     
     var body: some View {
@@ -29,10 +30,8 @@ struct ContentView : View {
                 .overlay(
                     ScrollView(.horizontal) {
                         HStack {
-                            ForEach(0..<10) { index in
-                                Text("Image \(index)")
-                                    .font(.title3)
-                                    .padding()
+                            ForEach(viewModel.memories) { index in
+                                Text("\(index.id)")
                             }
                         }
                     }
