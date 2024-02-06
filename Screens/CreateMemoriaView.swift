@@ -17,25 +17,18 @@ struct CreateMemoriaView: View {
         ZStack {
             Color("bg")
             VStack{
-//                Text("Show Sheet")
-//                    .foregroundStyle(Color("darkb"))
-//                    .onTapGesture {
-//                        withAnimation(.easeInOut(duration: 1)) {
-//                            showingList.toggle()
-//                        }
-//                    }
-//                    .sheet(isPresented: $showingList, content: {
-//                        recordingListView()
-//                    })
+//
+                
                 Spacer()
                 VStack {
-                    ImagePicker()
+                  //  ImagePicker()
+                    OtherImagePicker()
                     RecordView()
-    //                Button(action: {
-    //                    viewModel.addMemory(memory: MemoryModel(id: UUID(), imageName: <#T##String#>, voiceRecording: <#T##Recording?#>))
-    //                }, label: {
-    //                    Text("Create Memory")
-    //                })
+                    Button(action: {
+                        viewModel.addMemory(memory: MemoryModel(id: UUID(), image: viewModel.imageViewModel.image, voiceRecording: viewModel.recordingViewModel.recordingList.first?.fileURL))
+                    }, label: {
+                        /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
+                    })
                     Spacer()
                 }
             }

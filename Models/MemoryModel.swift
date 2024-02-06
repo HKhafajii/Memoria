@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct MemoryModel: Identifiable {
     var id: UUID
-    var imageName: String
+    var image: Image?
     var voiceRecording: URL?
+    
 }
     
