@@ -17,14 +17,14 @@ struct ContentView : View {
             ARViewContainer()
                 .ignoresSafeArea()
                 .overlay(
-                Image("logo2")
+                Image("SVGLogo")
                     .resizable()
                     .scaledToFit()
                     .opacity(0.35)
-                    .frame(maxWidth: 75)
-                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20)))
+                    .clipShape(Rectangle())
+                    .frame(maxWidth: 100)
                     .padding()
-                , alignment: .topLeading
+                , alignment: .topTrailing
                 )
                 .overlay(
                     ScrollView(.horizontal) {
