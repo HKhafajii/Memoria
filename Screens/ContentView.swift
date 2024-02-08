@@ -30,13 +30,35 @@ struct ContentView : View {
                 .overlay(
                     ScrollView(.horizontal) {
                         HStack {
+                            Button {
+                                viewModel.showingList.toggle()
+                            } label: {
+                                Image(systemName: "plus.square.fill.on.square.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .foregroundStyle(Color("lighto"))
+                                    .padding()
+                            }
+                            .sheet(isPresented: $viewModel.showingList, content: {
+                                CreateMemoriaView()
+                            })
+
                             ForEach(viewModel.memories) { index in
-                                Text("\(index.id)")
+                                if let image = index.image {
+                                    image
+                                        .resizable()
+                                        .frame(maxWidth: 75)
+                                        .onTapGesture {
+                                            
+                                        }
+                                    
+                                }
                             }
                         }
                     }
+                        .frame(maxHeight: 75)
                         .background(.ultraThinMaterial)
-                    , alignment: .bottom)
+                        , alignment: .bottom)
         }
     }
 }
@@ -48,16 +70,16 @@ struct ARViewContainer: UIViewRepresentable {
         let arView = ARView(frame: .zero)
 
         // Create a cube model
-        let mesh = MeshResource.generateBox(size: 0.1, cornerRadius: 0.005)
-        let material = SimpleMaterial(color: .gray, roughness: 0.15, isMetallic: true)
-        let model = ModelEntity(mesh: mesh, materials: [material])
+//        let mesh = MeshResource.generateBox(size: 0.1, cornerRadius: 0.005)
+//        let material = SimpleMaterial(color: .gray, roughness: 0.15, isMetallic: true)
+//        let model = ModelEntity(mesh: mesh, materials: [material])
 
         // Create horizontal plane anchor for the content
-        let anchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: SIMD2<Float>(0.2, 0.2)))
-        anchor.children.append(model)
+//        let anchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: SIMD2<Float>(0.2, 0.2)))
+//        anchor.children.append(model)
 
         // Add the horizontal plane anchor to the scene
-        arView.scene.anchors.append(anchor)
+//        arView.scene.anchors.append(anchor)
 
         return arView
         

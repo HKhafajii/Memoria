@@ -13,24 +13,18 @@ import PhotosUI
 
 struct OtherImagePicker: View {
     
-    @StateObject var imagePicker = MemoryViewModel.shared
+    @ObservedObject var imagePicker = MemoryViewModel.shared
+    @State var data: Data? = nil
     
     var body: some View {
         NavigationStack {
             VStack {
                 
-                if let image = imagePicker.imageViewModel.image {
-                    image
+                if let image = data, let uiImage = UIImage(data: image) {
+                    Image(uiImage: uiImage)
                         .resizable()
                         .scaledToFit()
                 } else {
-                    Text("Pick an Image")
-                }
-            }
-            .padding()
-            .navigationTitle("Choose a Memory")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
                     PhotosPicker(
                         selection: $imagePicker.imageViewModel.imageSelection
                         , matching: .images
@@ -38,13 +32,35 @@ struct OtherImagePicker: View {
                         Image(systemName: "photo")
                             .imageScale(.large)
                             .foregroundStyle(.black)
+                            .onChange(of: imagePicker.imageViewModel.imageSelection) { newValue, _ in
+                                guard let item = newValue else {return}
+                                item.loadTransferable(type: Data.self) { result in
+                                    switch result {
+                                    case .success(let data):
+                                        if let data = data {
+                                            self.data = data
+                                            let uuid = UUID().uuidString
+                                            let fileName = self.getDocumentsDirectory().appendingPathComponent("\(uuid).png")
+                                            try? data.write(to: fileName)
+                                        } else {
+                                            print("Data is nill")
+                                        }
+                                    case .failure(let failure):
+                                        print("Didn't work \(failure.localizedDescription)")
+                                    }
+                                }
+                            }
                     }
                 }
             }
+            .padding()
         }
-        
-        
     }
+    
+    func getDocumentsDirectory() -> URL {
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            return paths[0]
+        }
 }
 
 #Preview {

@@ -12,7 +12,7 @@ struct HomeView: View {
         NavigationView {
             ZStack {
                 Color("bg").ignoresSafeArea()
-                VStack(spacing: 50) {
+                VStack(spacing: -100) {
                     Image("Logo")
                         .resizable()
                         .frame(width: 300, height: 300)
@@ -36,23 +36,8 @@ struct HomeView: View {
                         .cornerRadius(12)
                         .shadow(radius: 10, x: 0, y: 8)
                     }
-                    
-                    NavigationLink(destination: CreateMemoriaView())
-                    {
-                        HStack(spacing: 10) {
-                            Image(systemName: "plus.circle.fill")
-                                .padding()
-                            Text("Create \nMemoria")
-                        }
-                        .multilineTextAlignment(.center)
-                        .font(.title)
-                        .foregroundStyle(Color("darkb"))
-                        .frame(width: 250)
-                        .padding()
-                        .background(Color("lighto"))
-                        .cornerRadius(12)
-                        .shadow(radius: 10, x: 0, y: 10)
-                    }
+                    Spacer()
+                
                 }
             }
         }
