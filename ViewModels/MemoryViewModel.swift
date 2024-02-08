@@ -14,6 +14,7 @@ class MemoryViewModel: ObservableObject {
     @Published var imageViewModel = ImageUtility()
     @Published var memories: [MemoryModel] = []
     @Published var memory: MemoryModel
+    @Published var showingList = false
     static let shared = MemoryViewModel()
     
     private init() {

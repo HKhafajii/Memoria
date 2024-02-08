@@ -14,22 +14,36 @@ struct CreateMemoriaView: View {
     @ObservedObject var viewModel = MemoryViewModel.shared
     
     var body: some View {
-        ZStack {
-            Color("bg")
-            VStack{
-//
-                
-                Spacer()
+        NavigationStack {
+            ZStack {
+                Color("bg")
                 VStack {
-                  //  ImagePicker()
-                    OtherImagePicker()
-                    RecordView()
                     Button(action: {
                         viewModel.addMemory(memory: MemoryModel(id: UUID(), image: viewModel.imageViewModel.image, voiceRecording: viewModel.recordingViewModel.recordingList.first?.fileURL))
+                        showingList.toggle()
                     }, label: {
-                        /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
+                        Text("Create Memoria!")
+                            .foregroundStyle(Color("darkb"))
+                            .font(.system(size: 36))
+                            .padding()
+                            .background(Color("lighto"))
+                            .clipShape(Capsule())
+                            .padding(.top, 8)
                     })
+                    
                     Spacer()
+                    
+                    VStack {
+                        //  ImagePicker()
+                        OtherImagePicker()
+                        Spacer()
+                        RecordView()
+                        
+                        
+                       
+
+                        
+                    }
                 }
             }
         }
