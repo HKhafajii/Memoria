@@ -15,9 +15,10 @@ struct HomeView: View {
                 VStack(spacing: -100) {
                     Image("Logo")
                         .resizable()
-                        .frame(width: 300, height: 300)
-                        .cornerRadius(120)
+                        .scaledToFit()
+                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 100, height: 100)))
                         .shadow(radius: 10, x: 0, y: 8)
+                        .padding()
                     Spacer()
                     NavigationLink {
                         ContentView()
@@ -30,10 +31,10 @@ struct HomeView: View {
                         .multilineTextAlignment(.center)
                         .font(.title)
                         .foregroundStyle(Color("darkb"))
-                        .frame(width: 250)
                         .padding()
                         .background(Color("lighto"))
-                        .cornerRadius(12)
+                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
+                        .padding()
                         .shadow(radius: 10, x: 0, y: 8)
                     }
                     Spacer()

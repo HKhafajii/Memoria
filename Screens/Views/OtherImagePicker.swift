@@ -30,7 +30,7 @@ struct OtherImagePicker: View {
                         , matching: .images
                     ) {
                         Image(systemName: "photo")
-                            .imageScale(.large)
+                            .font(.system(size: 36))
                             .foregroundStyle(.black)
                             .onChange(of: imagePicker.imageViewModel.imageSelection) { newValue, _ in
                                 guard let item = newValue else {return}
