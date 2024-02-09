@@ -30,9 +30,9 @@ struct OtherImagePicker: View {
                         , matching: .images
                     ) {
                         Image(systemName: "photo")
-                            .imageScale(.large)
+                            .font(.system(size: 36))
                             .foregroundStyle(.black)
-                            .onChange(of: imagePicker.imageViewModel.imageSelection) { newValue, _ in
+                            .onChange(of: imagePicker.imageViewModel.imageSelection) { _, newValue in
                                 guard let item = newValue else {return}
                                 item.loadTransferable(type: Data.self) { result in
                                     switch result {

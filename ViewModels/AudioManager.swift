@@ -56,6 +56,7 @@ class AudioManager {
     func stopRecording() {
         audioRecorder.stop()
         isRecording = false
+        
         print("Stopped Recording")
     }
     

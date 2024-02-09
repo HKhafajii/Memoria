@@ -7,11 +7,11 @@
 
 import SwiftUI
 import RealityKit
+import AVFoundation
 
 struct ContentView : View {
     
     @ObservedObject var viewModel = MemoryViewModel.shared
-//    var logoSize: CGSize = 12.0
     
     var body: some View {
         VStack {
@@ -27,6 +27,19 @@ struct ContentView : View {
                     .padding()
                 , alignment: .topTrailing
                 )
+                .overlay(alignment: .center, content: {
+                    if let image = viewModel.memory.image {
+                        image
+                            .resizable()
+                            .frame(maxWidth: 350, maxHeight: 350)
+                            .onTapGesture {
+                               
+                                if let url = viewModel.memory.voiceRecording {
+                                    viewModel.recordingViewModel.startPlaying(url: url)
+                                }
+                            }
+                    }
+                })
                 .overlay(
                     ScrollView(.horizontal) {
                         HStack {
@@ -49,7 +62,7 @@ struct ContentView : View {
                                         .resizable()
                                         .frame(maxWidth: 75)
                                         .onTapGesture {
-                                            
+                                            viewModel.memory = index
                                         }
                                     
                                 }

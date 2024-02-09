@@ -19,13 +19,22 @@ struct CreateMemoriaView: View {
                 Color("bg")
                 VStack {
                     Button(action: {
-                        viewModel.addMemory(memory: MemoryModel(id: UUID(), image: viewModel.imageViewModel.image, voiceRecording: viewModel.recordingViewModel.recordingList.first?.fileURL))
-                        showingList.toggle()
+                        viewModel.recordingViewModel.fetchAllRecordings()
+                        viewModel.addMemory(
+                            memory: MemoryModel(
+                                id: UUID(),
+                                image: viewModel.imageViewModel.image,
+                                voiceRecording: viewModel.recordingViewModel.recordingList.first?.fileURL)
+                        )
+                        // this is view-related
+                        viewModel.showingList.toggle()
                     }, label: {
                         Text("Create Memoria!")
                             .foregroundStyle(Color("darkb"))
-                            .font(.system(size: 36))
+                            .font(.system(size: 32))
+                            .fontWeight(.semibold)
                             .padding()
+                            .padding(.horizontal)
                             .background(Color("lighto"))
                             .clipShape(Capsule())
                             .padding(.top, 8)
@@ -34,6 +43,7 @@ struct CreateMemoriaView: View {
                     Spacer()
                     
                     VStack {
+                        Spacer()
                         //  ImagePicker()
                         OtherImagePicker()
                         Spacer()
@@ -101,7 +111,8 @@ struct RecordView: View {
                     }
             }
             .font(.title3)
-            .frame(width: 350, height: 75)
+            .padding()
+            .clipShape(Capsule())
             .background(Color("lighto"))
             .cornerRadius(12)
             .shadow(radius: 10, x: 0.0, y: 10)

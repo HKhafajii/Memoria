@@ -10,6 +10,7 @@ import Foundation
 class RecordingListViewModel: ObservableObject {
     
     @Published var recordingList = [Recording]()
+    
     let audioManager = AudioManager()
     
     init() {
