@@ -19,8 +19,15 @@ struct CreateMemoriaView: View {
                 Color("bg")
                 VStack {
                     Button(action: {
-                        viewModel.addMemory(memory: MemoryModel(id: UUID(), image: viewModel.imageViewModel.image, voiceRecording: viewModel.recordingViewModel.recordingList.first?.fileURL))
-                        showingList.toggle()
+                        viewModel.recordingViewModel.fetchAllRecordings()
+                        viewModel.addMemory(
+                            memory: MemoryModel(
+                                id: UUID(),
+                                image: viewModel.imageViewModel.image,
+                                voiceRecording: viewModel.recordingViewModel.recordingList.first?.fileURL)
+                        )
+                        // this is view-related
+                        viewModel.showingList.toggle()
                     }, label: {
                         Text("Create Memoria!")
                             .foregroundStyle(Color("darkb"))
