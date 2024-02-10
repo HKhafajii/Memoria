@@ -54,6 +54,9 @@ struct HomeView: View {
                     isAnimating = true
                 })
             })
+            .navigationTitle("Home")
+            .toolbar(.hidden)
+            
         }
         .ignoresSafeArea()
      
