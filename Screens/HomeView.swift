@@ -41,7 +41,7 @@ struct HomeView: View {
                         .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
                         .padding()
                         .shadow(radius: 10, x: 0, y: 8)
-                        .offset(x: isAnimating ? 0 : -350)
+                        .offset(y: isAnimating ? 0 : 350)
                         .animation(.easeInOut(duration: 1.5), value: isAnimating)
                     }
                     
