@@ -22,6 +22,7 @@ class MemoryViewModel: ObservableObject {
     }
     
     func addMemory(memory: MemoryModel) {
+       
         memories.append(memory)
     }
     func fetchAllMemories() -> [MemoryModel] {
