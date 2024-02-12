@@ -22,11 +22,13 @@ struct ContentView : View {
                     Image("SVGLogo")
                         .resizable()
                         .scaledToFit()
-                        .opacity(0.35)
                         .clipShape(Rectangle())
                         .frame(maxWidth: 100)
                         .padding()
+                        .padding([.trailing, .top], 20)
+                   
                     , alignment: .topTrailing
+                    
                 )
                 .overlay(alignment: .center, content: {
                     if let image = viewModel.memory.image {
@@ -76,6 +78,7 @@ struct ContentView : View {
                         .background(.ultraThinMaterial)
                     , alignment: .bottom)
         }
+        .ignoresSafeArea()
     }
 }
 
