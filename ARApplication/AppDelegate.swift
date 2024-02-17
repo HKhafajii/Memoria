@@ -7,6 +7,8 @@
 
 import UIKit
 import SwiftUI
+import Firebase
+
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,7 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+        
+//        Firebase Configuration when app is started
+        FirebaseApp.configure()
+        print("Configured Firebase!")
+        
         // Create the SwiftUI view that provides the window contents.
         let contentView = HomeView()
 

@@ -25,7 +25,7 @@ struct ContentView : View {
                         .clipShape(Rectangle())
                         .frame(maxWidth: 100)
                         .padding()
-                        .padding([.trailing, .top], 20)
+                        .padding(.top, 40)
                    
                     , alignment: .topTrailing
                     
@@ -34,7 +34,8 @@ struct ContentView : View {
                     if let image = viewModel.memory.image {
                         image
                             .resizable()
-                            .frame(maxWidth: 350, maxHeight: 350)
+                            .scaledToFit()
+                            .frame(width: 300, height: 300)
                             .onTapGesture {
                                 
                                 if let url = viewModel.memory.voiceRecording {
@@ -65,7 +66,9 @@ struct ContentView : View {
                                 if let image = index.image {
                                     image
                                         .resizable()
-                                        .frame(maxWidth: 75)
+                                        .scaledToFit()
+
+                                        .padding()
                                         .onTapGesture {
                                             viewModel.memory = index
                                         }
@@ -74,7 +77,7 @@ struct ContentView : View {
                             }
                         }
                     }
-                        .frame(maxHeight: 75)
+                        .frame(maxHeight: 100)
                         .background(.ultraThinMaterial)
                     , alignment: .bottom)
         }
