@@ -10,12 +10,14 @@ import SwiftUI
 struct HomeView: View {
     
     @State var isAnimating = false
-    
+    @State private var showSignInView = false
     var body: some View {
         NavigationView {
             ZStack {
                 Color("bg").ignoresSafeArea()
                 VStack(spacing: -100) {
+                    
+                   
                     Image("Logo")
                         .resizable()
                         .scaledToFit()
@@ -24,7 +26,9 @@ struct HomeView: View {
                         .offset(x: isAnimating ? 0 : 400)
                         .animation(.easeInOut(duration: 1), value: isAnimating)
                         .padding()
+                    
                     Spacer()
+                    
                     NavigationLink {
                         ContentView()
                     } label: {
@@ -44,11 +48,17 @@ struct HomeView: View {
                         .offset(y: isAnimating ? 0 : 350)
                         .animation(.easeInOut(duration: 1.5), value: isAnimating)
                     }
+                    // End of navigation link
                     
                     Spacer()
+                    NavigationLink {
+                        SettingsView(showSignInView: $showSignInView)
+                    } label: {
+                        Text("Settings")
+                    }
                 
-                }
-            }
+                } // End of Vstack
+            } // End of Zstack
             .onAppear(perform: {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute:  {
                     isAnimating = true
@@ -56,16 +66,21 @@ struct HomeView: View {
             })
             .navigationTitle("Home")
             .toolbar(.hidden)
-            
-        }
+            // End of animation onAppear
+        } // End of Navigation Stack
         .ignoresSafeArea()
-     
+        .onAppear {
+            let authUser = try? AuthenticationManager.shared.getAuthenticatedUser()
+            self.showSignInView = authUser == nil ? true : false
+        } // End of onAppear
+        .fullScreenCover(isPresented: $showSignInView) {
+            NavigationStack {
+                AuthenticationView(showSignInView: $showSignInView)
+            }
+        } // End of fullscreencover
     }
 }
 
 #Preview {
     HomeView()
 }
-
-
-

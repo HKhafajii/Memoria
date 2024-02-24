@@ -48,16 +48,12 @@ class AudioManager {
         } catch {
             print("Failed to set up recording!")
         }
-        
-        print("Started Recording")
     }
     
     // a function that stops the recording and sets the bool back to false
     func stopRecording() {
         audioRecorder.stop()
         isRecording = false
-        
-        print("Stopped Recording")
     }
     
     
