@@ -8,6 +8,8 @@
 import Foundation
 
 
+
+
 class MemoryViewModel: ObservableObject {
 
     @Published var recordingViewModel = RecordingListViewModel()
@@ -24,15 +26,21 @@ class MemoryViewModel: ObservableObject {
     func addMemory(memory: MemoryModel) {
        
         memories.append(memory)
+        
     }
+    
     func fetchAllMemories() -> [MemoryModel] {
         return memories
     }
+    
     func removeMemory(memory: MemoryModel) {
         if let index = memories.firstIndex(where: { $0.id == memory.id }) {
             memories.remove(at: index)
         }
     }
 }
+
+
+
 
 
