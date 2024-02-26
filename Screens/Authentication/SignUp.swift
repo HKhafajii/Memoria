@@ -12,7 +12,7 @@ final class SignUpWithEmailViewModel: ObservableObject {
     
     @Published var email = ""
     @Published var password = ""
-    @Published var shared = SignUpWithEmailViewModel()
+    static var shared = SignUpWithEmailViewModel()
     
     
     func signUp() async throws {
@@ -28,7 +28,7 @@ final class SignUpWithEmailViewModel: ObservableObject {
             print("No email or password found")
             return
         }
-        try await AuthenticationManager.shared.createUser(email: email, password: password)
+        try await AuthenticationManager.shared.signInUser(email: email, password: password)
     }
 }
 

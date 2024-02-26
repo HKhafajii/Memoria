@@ -11,6 +11,7 @@ struct HomeView: View {
     
     @State var isAnimating = false
     @State private var showSignInView = false
+    
     var body: some View {
         NavigationView {
             ZStack {

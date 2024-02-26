@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
+import ARKit
 import RealityKit
 import AVFoundation
 
 struct ContentView : View {
     
     @ObservedObject var viewModel = MemoryViewModel.shared
-    
     
     var body: some View {
         VStack {
@@ -95,8 +95,20 @@ struct ARViewContainer: UIViewRepresentable {
         
     }
     
-    func updateUIView(_ uiView: ARView, context: Context) {}
-    
+    func updateUIView(_ uiView: ARView, context: Context) {
+        
+        uiView.scene.anchors.removeAll()
+        
+        let modelEntity = try! ModelEntity.loadModel(named: "PictureFrame.usdz")
+        
+        let anchorEntity = AnchorEntity()
+        anchorEntity.addChild(modelEntity)
+        
+        anchorEntity.position = [-0, 0, -1]
+        
+        uiView.scene.addAnchor(anchorEntity)
+        
+    }
 }
 
 #Preview {

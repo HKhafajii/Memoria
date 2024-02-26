@@ -8,9 +8,6 @@
 import SwiftUI
 import PhotosUI
 
-
-
-
 struct OtherImagePicker: View {
     
     @ObservedObject var imagePicker = MemoryViewModel.shared
