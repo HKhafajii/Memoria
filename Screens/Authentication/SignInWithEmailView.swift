@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-
-
-
 struct SignInWithEmailView: View {
     
     @StateObject private var viewModel = SignUpWithEmailViewModel()
@@ -35,8 +32,16 @@ struct SignInWithEmailView: View {
                         .clipShape(.buttonBorder)
                     
                     Button(action: {
-                        // sign in action
-                        
+                        Task {
+                            // sign in action
+                            do {
+                                try await viewModel.signIn()
+                                showSignInView = false
+                                return
+                            } catch {
+                                print("error \(error)")
+                            }
+                        }
                     }, label: {
                         Text("Sign In")
                             .foregroundStyle(.lighto)
