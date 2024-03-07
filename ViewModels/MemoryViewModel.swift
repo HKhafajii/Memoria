@@ -12,7 +12,7 @@ import Foundation
 
 class MemoryViewModel: ObservableObject {
 
-    @Published var recordingViewModel = RecordingListViewModel()
+    @Published var recordingViewModel = RecordingListViewModel(dataService: AudioManager())
     @Published var imageViewModel = ImageUtility()
     @Published var memories: [MemoryModel] = []
     @Published var memory: MemoryModel

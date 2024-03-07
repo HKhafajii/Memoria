@@ -16,9 +16,8 @@ struct HomeView: View {
         NavigationView {
             ZStack {
                 Color("bg").ignoresSafeArea()
-                VStack(spacing: -100) {
+                VStack(spacing: 10) {
                     
-                   
                     Image("Logo")
                         .resizable()
                         .scaledToFit()
@@ -28,7 +27,6 @@ struct HomeView: View {
                         .animation(.easeInOut(duration: 1), value: isAnimating)
                         .padding()
                     
-                    Spacer()
                     
                     NavigationLink {
                         ContentView()
@@ -51,11 +49,22 @@ struct HomeView: View {
                     }
                     // End of navigation link
                     
-                    Spacer()
+                    
                     NavigationLink {
                         SettingsView(showSignInView: $showSignInView)
                     } label: {
                         Text("Settings")
+                            .multilineTextAlignment(.center)
+                            .font(.title)
+                            .foregroundStyle(Color("darkb"))
+                            .padding()
+                            .background(Color("lighto"))
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
+                            .padding()
+                            .shadow(radius: 10, x: 0, y: 8)
+                            .offset(y: isAnimating ? 0 : 350)
+                            .animation(.easeInOut(duration: 1.5), value: isAnimating)
+
                     }
                 
                 } // End of Vstack

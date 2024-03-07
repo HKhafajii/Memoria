@@ -11,7 +11,7 @@ import ARKit
 
 final class ARViewController: ObservableObject {
     
-    static var shared = ARViewContainer()
+    static var shared = ARViewController()
     private var modelAnchor: AnchorEntity?
     @Published var arView: ARView
     
@@ -62,12 +62,12 @@ final class ARViewController: ObservableObject {
             let worldPosition = simd_make_float3(firstResults.worldTransform.columns.3)
             
             //Create 3D model
-            
-            let mesh = MeshResource.generateBox(width: 0.5, height: 2, depth: 0.2)
-            let materials = SimpleMaterial(color: .black, isMetallic: true)
+            let modelEntity = try! ModelEntity.loadModel(named: "PictureFrame.usdz")
+//            let mesh = MeshResource.generateBox(width: 0.5, height: 2, depth: 0.2)
+//            let materials = SimpleMaterial(color: .black, isMetallic: true)
             
             //Place Object
-//            placeObject(object: <#T##ModelEntity#>, at: <#T##SIMD3<Float>#>)
+            placeObject(object: modelEntity, at: worldPosition)
         }
     }
     

@@ -17,6 +17,7 @@ struct CreateMemoriaView: View {
         NavigationStack {
             ZStack {
                 Color("bg")
+                    .ignoresSafeArea()
                 VStack {
                     Button(action: {
                         viewModel.recordingViewModel.fetchAllRecordings()
@@ -47,7 +48,7 @@ struct CreateMemoriaView: View {
                         //  ImagePicker()
                         OtherImagePicker()
                         Spacer()
-                        RecordView()
+                        RecordView(dataService: AudioManager())
                         
                         
                        
@@ -70,7 +71,11 @@ struct RecordView: View {
     
     @State private var showingAlert = false
     
-    @ObservedObject var vm = MemoryViewModel.shared
+    @StateObject private var vm: RecordingListViewModel
+    
+    init(dataService: AudioManagerService) {
+        _vm = StateObject(wrappedValue: RecordingListViewModel(dataService: AudioManager()))
+    }
     
     @State var recordingFailed = false
     
@@ -87,7 +92,7 @@ struct RecordView: View {
                     .onTapGesture {
                         if isRecording == false {
                             do {
-                                try vm.recordingViewModel.audioManager.startRecording()
+                                try vm.audioManager.startRecording()
                             } catch {
                                 print("The start recording function didnt work")
                                 recordingFailed = true
@@ -96,7 +101,7 @@ struct RecordView: View {
                                 isRecording.toggle()
                             }
                         } else {
-                            vm.recordingViewModel.audioManager.stopRecording()
+                            vm.audioManager.stopRecording()
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 isRecording.toggle()
                             }
