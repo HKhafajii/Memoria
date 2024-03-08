@@ -65,6 +65,12 @@ struct OtherImagePicker: View {
 }
 
 
+protocol ImageUtilityService {
+    
+    func loadTransferable(from imageSelection: PhotosPickerItem) async throws
+    
+}
+
 class ImageUtility: ObservableObject {
     
     @Published var image: Image?

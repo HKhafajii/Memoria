@@ -8,7 +8,18 @@
 import Foundation
 import AVFoundation
 
-class AudioManager {
+protocol AudioManagerService {
+    
+//    var isRecording: Bool
+    func startRecording() throws
+    func stopRecording()
+    func startPlaying(url: URL) throws
+    func stopPlaying(url: URL)
+    func deleteRecording(url: URL) throws
+    
+}
+
+class AudioManager: AudioManagerService {
     
     var audioRecorder: AVAudioRecorder!
     var audioPlayer: AVAudioPlayer!
@@ -27,6 +38,7 @@ class AudioManager {
         try recordingSession.setActive(true)
         
         // the path will include the directory of the recording
+        // TODO: Change path to use firebase path
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         
         // we have to give a unique name to every recording, so we are setting it to the date and time it was recorded the .m4a is very important doing this

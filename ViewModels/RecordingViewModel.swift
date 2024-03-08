@@ -11,9 +11,10 @@ class RecordingListViewModel: ObservableObject {
     
     @Published var recordingList = [Recording]()
     
-    let audioManager = AudioManager()
+    let audioManager: AudioManagerService
     
-    init() {
+    init(dataService: AudioManagerService) {
+        self.audioManager = dataService
         fetchAllRecordings()
     }
     

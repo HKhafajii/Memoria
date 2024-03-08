@@ -15,6 +15,7 @@ struct ContentView : View {
     @ObservedObject var viewModel = MemoryViewModel.shared
     
     var body: some View {
+        
         VStack {
             ARViewContainer()
                 .ignoresSafeArea()
@@ -86,31 +87,81 @@ struct ContentView : View {
 }
 
 struct ARViewContainer: UIViewRepresentable {
+    @ObservedObject var viewModel = MemoryViewModel.shared
     
     func makeUIView(context: Context) -> ARView {
         
         let arView = ARView(frame: .zero)
+        arView.scene.anchors.removeAll()
+
         
-        return arView
-        
-    }
-    
-    func updateUIView(_ uiView: ARView, context: Context) {
-        
-        uiView.scene.anchors.removeAll()
+        // finish doing this
+//        let uiImage = {
+//            
+//        }
+
         
         let modelEntity = try! ModelEntity.loadModel(named: "PictureFrame.usdz")
         
-        let anchorEntity = AnchorEntity()
-        anchorEntity.addChild(modelEntity)
         
-        anchorEntity.position = [-0, 0, -1]
         
-        uiView.scene.addAnchor(anchorEntity)
+        let modelAnchor = AnchorEntity()
+        modelAnchor.addChild(modelEntity)
         
+        modelAnchor.position = [-0, 0, -1]
+        
+        arView.scene.addAnchor(modelAnchor)
+       
+        var materials = SimpleMaterial()
+        
+        
+        
+        
+        materials.color = .init(tint: .white.withAlphaComponent(0.999), texture: .init(try! .load(named: "logo2")))
+        materials.metallic = .float(1.0)
+        materials.roughness = .float(0.0)
+        
+        let imageEntity = ModelEntity(mesh: .generateBox(width: 2.0, height: 2.0, depth: 0.01), materials: [materials])
+        
+        imageEntity.position.z -= 2
+        imageEntity.position.y -= 2
+        imageEntity.position.x -= 1
+        
+        imageEntity.setParent(modelAnchor)
+        arView.scene.addAnchor(modelAnchor)
+        
+        
+    
+        
+        return arView
     }
+    
+    func updateUIView(_ uiView: ARView, context: Context) {}
+     
 }
 
 #Preview {
     ContentView()
 }
+
+
+//extension ARView {
+//    
+//    func enableTapGesture() {
+//        
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
+//        self.addGestureRecognizer(tap)
+//        
+//    }
+//    
+//    func handleTap(recognizer: UITapGestureRecognizer) {
+//        
+//        let tapLocation = recognizer.location(in: self)
+//        
+//        
+//        guard let rayResult = self.ray(through: tapLocation) else {return}
+//    }
+//    
+//    let results = self.scene.raycast(origin: rayResult., direction: <#T##SIMD3<Float>#>)
+//    
+//}

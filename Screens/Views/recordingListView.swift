@@ -9,7 +9,7 @@ import SwiftUI
 
 struct recordingListView: View {
     
-    @ObservedObject var vm = RecordingListViewModel()
+    @ObservedObject var vm = RecordingListViewModel(dataService: AudioManager())
     
     var body: some View {
         NavigationStack {
