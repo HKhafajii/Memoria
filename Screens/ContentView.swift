@@ -12,7 +12,11 @@ import AVFoundation
 
 struct ContentView : View {
     
-    @ObservedObject var viewModel = MemoryViewModel.shared
+    @ObservedObject var viewModel: MemoryViewModel
+    
+    init(service: MemoryService) {
+        _viewModel = ObservedObject(wrappedValue: MemoryViewModel(memoryService: service))
+    }
     
     var body: some View {
         
@@ -32,15 +36,15 @@ struct ContentView : View {
                     
                 )
                 .overlay(alignment: .center, content: {
-                    if let image = viewModel.memory.image {
+                    if let image = viewModel.memoryService.memory.image  {
                         image
                             .resizable()
                             .scaledToFit()
                             .frame(width: 300, height: 300)
                             .onTapGesture {
                                 
-                                if let url = viewModel.memory.voiceRecording {
-                                    viewModel.recordingViewModel.startPlaying(url: url)
+                                if let url = viewModel.memoryService.memory.voiceRecording {
+                                    viewModel.memoryService.recordingViewModel.startPlaying(url: url)
                                 }
                             }
                     }
@@ -59,23 +63,21 @@ struct ContentView : View {
                             }
                             
                             .sheet(isPresented: $viewModel.showingList, content: {
-                                CreateMemoriaView()
+                                CreateMemoriaView(service: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
                             })
                             
                             
-                            ForEach(viewModel.memories) { index in
-                                if let image = index.image {
+                            ForEach(viewModel.memoryService.memories) { memory in
+                                if let image = memory.image {
                                     image
                                         .resizable()
                                         .scaledToFit()
-
                                         .padding()
                                         .onTapGesture {
-                                            viewModel.memory = index
+                                            viewModel.memoryService.memory = memory
                                         }
-                                    
                                 }
-                            }
+                            } // End ForEach
                         }
                     }
                         .frame(maxHeight: 100)
@@ -87,81 +89,37 @@ struct ContentView : View {
 }
 
 struct ARViewContainer: UIViewRepresentable {
-    @ObservedObject var viewModel = MemoryViewModel.shared
+//    @ObservedObject var viewModel = MemoryViewModel
     
     func makeUIView(context: Context) -> ARView {
         
         let arView = ARView(frame: .zero)
         arView.scene.anchors.removeAll()
-
-        
-        // finish doing this
-//        let uiImage = {
-//            
-//        }
-
         
         let modelEntity = try! ModelEntity.loadModel(named: "PictureFrame.usdz")
         
-        
-        
         let modelAnchor = AnchorEntity()
+        
         modelAnchor.addChild(modelEntity)
-        
         modelAnchor.position = [-0, 0, -1]
-        
         arView.scene.addAnchor(modelAnchor)
        
-        var materials = SimpleMaterial()
-        
-        
-        
-        
-        materials.color = .init(tint: .white.withAlphaComponent(0.999), texture: .init(try! .load(named: "logo2")))
-        materials.metallic = .float(1.0)
-        materials.roughness = .float(0.0)
-        
-        let imageEntity = ModelEntity(mesh: .generateBox(width: 2.0, height: 2.0, depth: 0.01), materials: [materials])
-        
-        imageEntity.position.z -= 2
-        imageEntity.position.y -= 2
-        imageEntity.position.x -= 1
-        
-        imageEntity.setParent(modelAnchor)
-        arView.scene.addAnchor(modelAnchor)
-        
-        
-    
-        
         return arView
     }
+    
+        
+        
+
+    
+        
     
     func updateUIView(_ uiView: ARView, context: Context) {}
      
 }
 
 #Preview {
-    ContentView()
+    ContentView(service: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
 }
 
 
-//extension ARView {
-//    
-//    func enableTapGesture() {
-//        
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
-//        self.addGestureRecognizer(tap)
-//        
-//    }
-//    
-//    func handleTap(recognizer: UITapGestureRecognizer) {
-//        
-//        let tapLocation = recognizer.location(in: self)
-//        
-//        
-//        guard let rayResult = self.ray(through: tapLocation) else {return}
-//    }
-//    
-//    let results = self.scene.raycast(origin: rayResult., direction: <#T##SIMD3<Float>#>)
-//    
-//}
+

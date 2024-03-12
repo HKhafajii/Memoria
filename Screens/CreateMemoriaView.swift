@@ -11,22 +11,22 @@ import AVFoundation
 struct CreateMemoriaView: View {
     
     @State private var showingList = false
-    @ObservedObject var viewModel = MemoryViewModel.shared
+    @ObservedObject var viewModel: MemoryViewModel
     
+    init(service: MemoryService) {
+        _viewModel = ObservedObject(wrappedValue: MemoryViewModel(memoryService: service))
+    }
+
     var body: some View {
+        
         NavigationStack {
             ZStack {
                 Color("bg")
                     .ignoresSafeArea()
                 VStack {
                     Button(action: {
-                        viewModel.recordingViewModel.fetchAllRecordings()
-                        viewModel.addMemory(
-                            memory: MemoryModel(
-                                id: UUID(),
-                                image: viewModel.imageViewModel.image,
-                                voiceRecording: viewModel.recordingViewModel.recordingList.first?.fileURL)
-                        )
+                        viewModel.memoryService.recordingViewModel.fetchAllRecordings()
+                        viewModel.memoryService.addMemory(memory: MemoryModel(id: UUID(), image: viewModel.memoryService.imageViewModel.image, voiceRecording: viewModel.memoryService.recordingViewModel.recordingList.first?.fileURL))
                         // this is view-related
                         viewModel.showingList.toggle()
                     }, label: {
@@ -40,20 +40,14 @@ struct CreateMemoriaView: View {
                             .clipShape(Capsule())
                             .padding(.top, 8)
                     })
-                    
+
                     Spacer()
-                    
+
                     VStack {
                         Spacer()
-                        //  ImagePicker()
-                        OtherImagePicker()
+                        ImagePicker(service: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
                         Spacer()
-                        RecordView(dataService: AudioManager())
-                        
-                        
-                       
-
-                        
+                        RecordView(service: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
                     }
                 }
             }
@@ -62,7 +56,7 @@ struct CreateMemoriaView: View {
 }
 
 #Preview {
-    CreateMemoriaView()
+    CreateMemoriaView(service: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
 }
 
 struct RecordView: View {
@@ -71,10 +65,10 @@ struct RecordView: View {
     
     @State private var showingAlert = false
     
-    @StateObject private var vm: RecordingListViewModel
+    @ObservedObject private var vm: MemoryViewModel
     
-    init(dataService: AudioManagerService) {
-        _vm = StateObject(wrappedValue: RecordingListViewModel(dataService: AudioManager()))
+    init(service: MemoryService) {
+        _vm = ObservedObject(wrappedValue: MemoryViewModel(memoryService: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility())))
     }
     
     @State var recordingFailed = false
@@ -92,7 +86,8 @@ struct RecordView: View {
                     .onTapGesture {
                         if isRecording == false {
                             do {
-                                try vm.audioManager.startRecording()
+                                try vm.memoryService.recordingViewModel.audioManager.startRecording()
+                               
                             } catch {
                                 print("The start recording function didnt work")
                                 recordingFailed = true
@@ -101,7 +96,7 @@ struct RecordView: View {
                                 isRecording.toggle()
                             }
                         } else {
-                            vm.audioManager.stopRecording()
+                            vm.memoryService.recordingViewModel.audioManager.stopRecording()
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 isRecording.toggle()
                             }

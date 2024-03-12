@@ -12,7 +12,4 @@ struct MemoryModel: Identifiable {
     var id: UUID
     var image: Image?
     var voiceRecording: URL?
-    
-    
 }
-    

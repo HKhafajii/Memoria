@@ -10,7 +10,8 @@ import AVFoundation
 
 protocol AudioManagerService {
     
-//    var isRecording: Bool
+    // TODO: Try to get this bool working in the view
+    //    var isRecording: Bool {get set}
     func startRecording() throws
     func stopRecording()
     func startPlaying(url: URL) throws

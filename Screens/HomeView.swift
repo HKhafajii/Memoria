@@ -29,7 +29,7 @@ struct HomeView: View {
                     
                     
                     NavigationLink {
-                        ContentView()
+                        ContentView(service: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
                     } label: {
                         HStack(spacing: 10) {
                             Image(systemName: "eye")
