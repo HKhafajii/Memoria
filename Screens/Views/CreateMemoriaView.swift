@@ -11,11 +11,9 @@ import AVFoundation
 struct CreateMemoriaView: View {
     
     @State private var showingList = false
-    @ObservedObject var viewModel: MemoryViewModel
+    @EnvironmentObject var viewModel: MemoryViewModel
     
-    init(service: MemoryService) {
-        _viewModel = ObservedObject(wrappedValue: MemoryViewModel(memoryService: service))
-    }
+   
 
     var body: some View {
         
@@ -29,6 +27,7 @@ struct CreateMemoriaView: View {
                         viewModel.memoryService.addMemory(memory: MemoryModel(id: UUID(), image: viewModel.memoryService.imageViewModel.image, voiceRecording: viewModel.memoryService.recordingViewModel.recordingList.first?.fileURL))
                         // this is view-related
                         viewModel.showingList.toggle()
+                        print("Pressed")
                     }, label: {
                         Text("Create Memoria!")
                             .foregroundStyle(Color("darkb"))
@@ -45,9 +44,9 @@ struct CreateMemoriaView: View {
 
                     VStack {
                         Spacer()
-                        ImagePicker(service: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
+                        ImagePicker()
                         Spacer()
-                        RecordView(service: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
+                        RecordView()
                     }
                 }
             }
@@ -56,7 +55,8 @@ struct CreateMemoriaView: View {
 }
 
 #Preview {
-    CreateMemoriaView(service: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
+    CreateMemoriaView()
+        .environmentObject(MemoryViewModel(memoryService: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility())))
 }
 
 struct RecordView: View {
@@ -65,11 +65,11 @@ struct RecordView: View {
     
     @State private var showingAlert = false
     
-    @ObservedObject private var vm: MemoryViewModel
+    @EnvironmentObject private var vm: MemoryViewModel
     
-    init(service: MemoryService) {
-        _vm = ObservedObject(wrappedValue: MemoryViewModel(memoryService: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility())))
-    }
+//    init(service: MemoryService) {
+//        _vm = ObservedObject(wrappedValue: MemoryViewModel(memoryService: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility())))
+//    }
     
     @State var recordingFailed = false
     

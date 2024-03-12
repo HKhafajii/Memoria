@@ -10,14 +10,10 @@ import PhotosUI
 
 struct ImagePicker: View {
     
-    @ObservedObject var viewModel: MemoryViewModel
+    @EnvironmentObject private var viewModel: MemoryViewModel
     @State var data: Data? = nil
     
-    init(service: MemoryService) {
-        
-        _viewModel = ObservedObject(wrappedValue: MemoryViewModel(memoryService: service))
-        
-    }
+
     
     var body: some View {
         NavigationStack {
@@ -68,7 +64,8 @@ struct ImagePicker: View {
 }
 
 #Preview {
-    ImagePicker(service: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
+    ImagePicker()
+        .environmentObject(MemoryViewModel(memoryService: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility())))
 }
 
 

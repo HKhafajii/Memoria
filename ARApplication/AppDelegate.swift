@@ -12,17 +12,20 @@ import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+     let viewModel = MemoryViewModel(memoryService: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
     var window: UIWindow?
-
+    
+   
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
 //        Firebase Configuration when app is started
         FirebaseApp.configure()
-        print("Configured Firebase!")
+//        print("Configured Firebase!")
         
         // Create the SwiftUI view that provides the window contents.
         let contentView = HomeView()
+            .environmentObject(viewModel)
 
         // Use a UIHostingController as window root view controller.
         let window = UIWindow(frame: UIScreen.main.bounds)

@@ -80,7 +80,7 @@
 		62A253B52B6436D000EB67C2 /* recordingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recordingListView.swift; sourceTree = "<group>"; };
 		62A253B72B64593F00EB67C2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		62F47AE72B9B942E00B29F24 /* ImageUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtility.swift; sourceTree = "<group>"; };
-		62F47AEA2B9B95D500B29F24 /* PictureFrame.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = PictureFrame.usdz; sourceTree = "<group>"; };
+		62F47AEA2B9B95D500B29F24 /* PictureFrame.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = PictureFrame.usdz; path = "/Users/khafaajii/Documents/Development/ARApplication/ARApplication/Preview Content/PictureFrame.usdz"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,10 +175,8 @@
 		627AC0F12B6ADA6D0043AB35 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				6221B8802B7FE6CF00604296 /* Authentication */,
-				6217A29F2B5D8FCD004617D7 /* ContentView.swift */,
-				62A253A82B62E4FE00EB67C2 /* CreateMemoriaView.swift */,
 				62A253B72B64593F00EB67C2 /* HomeView.swift */,
+				6217A29F2B5D8FCD004617D7 /* ContentView.swift */,
 				62A253A52B62DFA600EB67C2 /* Views */,
 			);
 			path = Screens;
@@ -187,9 +185,11 @@
 		62A253A52B62DFA600EB67C2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6221B8802B7FE6CF00604296 /* Authentication */,
 				62A253B52B6436D000EB67C2 /* recordingListView.swift */,
 				627867382B7179A7006B1960 /* ImagePicker.swift */,
 				6221B8852B87E9E200604296 /* SettingsView.swift */,
+				62A253A82B62E4FE00EB67C2 /* CreateMemoriaView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

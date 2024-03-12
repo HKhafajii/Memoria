@@ -12,11 +12,12 @@ import AVFoundation
 
 struct ContentView : View {
     
-    @ObservedObject var viewModel: MemoryViewModel
+    @EnvironmentObject private var viewModel: MemoryViewModel
     
-    init(service: MemoryService) {
-        _viewModel = ObservedObject(wrappedValue: MemoryViewModel(memoryService: service))
-    }
+    
+//    init(service: MemoryService) {
+//        _viewModel = ObservedObject(wrappedValue: MemoryViewModel(memoryService: service))
+//    }
     
     var body: some View {
         
@@ -42,9 +43,10 @@ struct ContentView : View {
                             .scaledToFit()
                             .frame(width: 300, height: 300)
                             .onTapGesture {
-                                
+                                print("started")
                                 if let url = viewModel.memoryService.memory.voiceRecording {
                                     viewModel.memoryService.recordingViewModel.startPlaying(url: url)
+                                    
                                 }
                             }
                     }
@@ -63,7 +65,7 @@ struct ContentView : View {
                             }
                             
                             .sheet(isPresented: $viewModel.showingList, content: {
-                                CreateMemoriaView(service: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
+                                CreateMemoriaView()
                             })
                             
                             
@@ -75,50 +77,48 @@ struct ContentView : View {
                                         .padding()
                                         .onTapGesture {
                                             viewModel.memoryService.memory = memory
+                                            print("Made into memory")
                                         }
                                 }
                             } // End ForEach
                         }
                     }
                         .frame(maxHeight: 100)
-                        .background(.ultraThinMaterial)
-                    , alignment: .bottom)
+                        .background(.ultraThinMaterial),
+                         alignment: .bottom)
         }
         .ignoresSafeArea()
     }
 }
 
 struct ARViewContainer: UIViewRepresentable {
-//    @ObservedObject var viewModel = MemoryViewModel
     
     func makeUIView(context: Context) -> ARView {
         
         let arView = ARView(frame: .zero)
         arView.scene.anchors.removeAll()
         
-        let modelEntity = try! ModelEntity.loadModel(named: "PictureFrame.usdz")
+        let url = URL(fileURLWithPath: "/Users/khafaajii/Documents/Development/ARApplication/ARApplication/Preview Content/PictureFrame.usdz")
+        let entity = try? Entity.load(contentsOf: url)
         
         let modelAnchor = AnchorEntity()
+
+        if let modelEntity = entity {
+            modelAnchor.addChild(modelEntity)
+        }
         
-        modelAnchor.addChild(modelEntity)
         modelAnchor.position = [-0, 0, -1]
         arView.scene.addAnchor(modelAnchor)
        
         return arView
     }
     
-        
-        
-
-    
-        
-    
     func updateUIView(_ uiView: ARView, context: Context) {}
      
 }
-
 #Preview {
-    ContentView(service: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
+    ContentView()
+        .environmentObject(MemoryViewModel(memoryService: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility())))
 }
 
 

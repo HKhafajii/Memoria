@@ -11,6 +11,7 @@ struct HomeView: View {
     
     @State var isAnimating = false
     @State private var showSignInView = false
+    @EnvironmentObject private var viewModel: MemoryViewModel
     
     var body: some View {
         NavigationView {
@@ -29,7 +30,7 @@ struct HomeView: View {
                     
                     
                     NavigationLink {
-                        ContentView(service: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
+                        ContentView()
                     } label: {
                         HStack(spacing: 10) {
                             Image(systemName: "eye")
@@ -48,7 +49,6 @@ struct HomeView: View {
                         .animation(.easeInOut(duration: 1.5), value: isAnimating)
                     }
                     // End of navigation link
-                    
                     
                     NavigationLink {
                         SettingsView(showSignInView: $showSignInView)
@@ -93,4 +93,5 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .environmentObject(MemoryViewModel(memoryService: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility())))
 }
