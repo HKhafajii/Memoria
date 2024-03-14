@@ -12,15 +12,11 @@ import AVFoundation
 
 struct ContentView : View {
     
-    @EnvironmentObject private var viewModel: MemoryViewModel
+    @EnvironmentObject var viewModel: MemoryViewModel
+    @State var memoryPlaceholder: MemoryModel
     
-    
-//    init(service: MemoryService) {
-//        _viewModel = ObservedObject(wrappedValue: MemoryViewModel(memoryService: service))
-//    }
     
     var body: some View {
-        
         VStack {
             ARViewContainer()
                 .ignoresSafeArea()
@@ -32,25 +28,25 @@ struct ContentView : View {
                         .frame(maxWidth: 100)
                         .padding()
                         .padding(.top, 40)
-                   
+                    
                     , alignment: .topTrailing
                     
                 )
+            
                 .overlay(alignment: .center, content: {
-                    if let image = viewModel.memoryService.memory.image  {
+                    if let image = memoryPlaceholder.image  {
                         image
                             .resizable()
                             .scaledToFit()
                             .frame(width: 300, height: 300)
                             .onTapGesture {
-                                print("started")
-                                if let url = viewModel.memoryService.memory.voiceRecording {
+                                if let url = memoryPlaceholder.voiceRecording {
                                     viewModel.memoryService.recordingViewModel.startPlaying(url: url)
-                                    
                                 }
                             }
                     }
                 })
+            
                 .overlay(
                     ScrollView(.horizontal) {
                         HStack {
@@ -66,8 +62,8 @@ struct ContentView : View {
                             
                             .sheet(isPresented: $viewModel.showingList, content: {
                                 CreateMemoriaView()
+                                    .environmentObject(viewModel)
                             })
-                            
                             
                             ForEach(viewModel.memoryService.memories) { memory in
                                 if let image = memory.image {
@@ -76,8 +72,7 @@ struct ContentView : View {
                                         .scaledToFit()
                                         .padding()
                                         .onTapGesture {
-                                            viewModel.memoryService.memory = memory
-                                            print("Made into memory")
+                                            memoryPlaceholder = memory
                                         }
                                 }
                             } // End ForEach
@@ -85,11 +80,13 @@ struct ContentView : View {
                     }
                         .frame(maxHeight: 100)
                         .background(.ultraThinMaterial),
-                         alignment: .bottom)
+                    alignment: .bottom)
         }
         .ignoresSafeArea()
     }
 }
+
+
 
 struct ARViewContainer: UIViewRepresentable {
     
@@ -100,24 +97,23 @@ struct ARViewContainer: UIViewRepresentable {
         
         let url = URL(fileURLWithPath: "/Users/khafaajii/Documents/Development/ARApplication/ARApplication/Preview Content/PictureFrame.usdz")
         let entity = try? Entity.load(contentsOf: url)
-        
         let modelAnchor = AnchorEntity()
-
+        
         if let modelEntity = entity {
             modelAnchor.addChild(modelEntity)
         }
         
         modelAnchor.position = [-0, 0, -1]
         arView.scene.addAnchor(modelAnchor)
-       
+        
         return arView
     }
     
     func updateUIView(_ uiView: ARView, context: Context) {}
-     
+    
 }
 #Preview {
-    ContentView()
+    ContentView(memoryPlaceholder: MemoryModel(id: UUID()))
         .environmentObject(MemoryViewModel(memoryService: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility())))
 }
 

@@ -13,7 +13,7 @@ import Firebase
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-     let viewModel = MemoryViewModel(memoryService: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
+    
     var window: UIWindow?
     
    
@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Create the SwiftUI view that provides the window contents.
         let contentView = HomeView()
-            .environmentObject(viewModel)
+            
 
         // Use a UIHostingController as window root view controller.
         let window = UIWindow(frame: UIScreen.main.bounds)

@@ -11,9 +11,7 @@ import AVFoundation
 struct CreateMemoriaView: View {
     
     @State private var showingList = false
-    @EnvironmentObject var viewModel: MemoryViewModel
-    
-   
+    @EnvironmentObject private var viewModel: MemoryViewModel
 
     var body: some View {
         
@@ -45,8 +43,10 @@ struct CreateMemoriaView: View {
                     VStack {
                         Spacer()
                         ImagePicker()
+                            .environmentObject(viewModel)
                         Spacer()
                         RecordView()
+                            .environmentObject(viewModel)
                     }
                 }
             }

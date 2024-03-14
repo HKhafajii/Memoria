@@ -8,22 +8,20 @@
 import Foundation
 
 protocol MemoryServiceProtocol {
-    
     var memory: MemoryModel {get set}
     var memories: [MemoryModel] {get set}
     func addMemory(memory: MemoryModel)
     func fetchAllMemories() -> [MemoryModel]
     func removeMemory(memory: MemoryModel)
-    
 }
 
 class MemoryService: MemoryServiceProtocol {
 
-    var memories: [MemoryModel] = []
+     var memories: [MemoryModel] = []
     static let memoriesTest = [MemoryModel(id: UUID())]
-    var memory: MemoryModel
-    var recordingViewModel: RecordingListViewModel
-    var imageViewModel: ImageUtility
+     var memory: MemoryModel
+     var recordingViewModel: RecordingListViewModel
+     var imageViewModel: ImageUtility
     
     
     
@@ -32,11 +30,12 @@ class MemoryService: MemoryServiceProtocol {
         self.memory = MemoryModel(id: UUID())
         self.recordingViewModel = recordingViewModel
         self.imageViewModel = imageViewModel
-    
     }
     
     func addMemory(memory: MemoryModel) {
+        
         memories.append(memory)
+        
     }
     
     func fetchAllMemories() -> [MemoryModel] {
@@ -48,15 +47,14 @@ class MemoryService: MemoryServiceProtocol {
             memories.remove(at: index)
         }
     }
-
 }
+
+
 
 class MemoryViewModel: ObservableObject {
 
     @Published var memoryService: MemoryService
     @Published var showingList = false
-    static let shared = MemoryViewModel(memoryService: MemoryService(recordingViewModel: RecordingListViewModel(dataService: AudioManager()), imageViewModel: ImageUtility()))
-    
     
     init(memoryService: MemoryService) {
         self.memoryService = memoryService
