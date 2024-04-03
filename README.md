@@ -1,4 +1,30 @@
+# MemoriaAR
+
+![image](https://github.com/HKhafajii/Memoria/assets/147748541/c24ba079-17c6-4ec5-a9b3-b3586b5cdedf)
+
+
 MemoriaAR is an iOS application leveraging the Swift programing language with SwiftUI, UIKit, ARKit, RealityKit, Firebase, AVFoundation, 
 and PhotosUI libraries/frameworks to create an experience where memories can be experienced in a new way, a way in which is accessible for everyone.
 
-![image](https://github.com/HKhafajii/Memoria/assets/147748541/c24ba079-17c6-4ec5-a9b3-b3586b5cdedf)
+
+## Demo
+
+
+https://github.com/HKhafajii/Memoria/assets/147748541/9ea5ac96-a488-4ace-95a2-5cada8eba13b
+
+
+
+## Features
+
+
+- Augment Reality experience enjoying memories in a different way!
+- Voice recording capability to attatched each image.
+- On Test Flight now up for beta testing!
+- Dependency Injection
+- Firebase Authentication
+
+
+# Try it out!
+Be one of the users who beta tests this app on Test Flight! Only available on iOS
+
+https://testflight.apple.com/join/C0cEnw4c
