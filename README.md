@@ -10,7 +10,7 @@ and PhotosUI libraries/frameworks to create an experience where memories can be 
 ## Demo
 
 
-https://github.com/HKhafajii/Memoria/assets/147748541/9ea5ac96-a488-4ace-95a2-5cada8eba13b
+
 
 
 
